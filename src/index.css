@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body{
+    @apply box-border
+}
+.rdt_TableCol{
+   @apply text-blue-400 font-bold font-custom2 text-lg  border-b-gray-900 border-b-2 
+}
+
+.rdt_TableCell{
+    @apply  font-book text-base text-blue-gray-800
+}
+.rdt_TableHeader{
+    @apply text-red-800
+}
+
+.rdt_Pagination{
+    @apply flex
+}
+.sidebar{
+    @apply flex items-center gap-2 hover:text-white font-bold capitalize px-2 lg:text-lg text-3xl py-2  lg:justify-start justify-center
+}
+.sc-bjfHbI{
+    @apply bg-gradient-to-b from-indigo-900 to-cyan-500 bg-clip-text text-transparent  font-book text-2xl tracking-tight
+}
+
+
+/* 
+rdt_Table
+rdt_TableRow //no se
+rdt_TableCol // la cabezera de la tabla
+rdt_TableCol_Ordenable //no se
+rdt_TableCell //lo interno de la tabla
+rdt_TableHeader //no se
+rdt_TableFooter //no se
+rdt_TableHead //no se
+rdt_TableHeadRow
+rdt_TableBody
+rdt_ExpanderRow */
