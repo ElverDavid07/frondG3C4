@@ -27,7 +27,9 @@ body{
     @apply bg-gradient-to-b from-indigo-900 to-cyan-500 bg-clip-text text-transparent  font-book text-2xl tracking-tight
 }
 
-
+.before{
+    @apply before:content-[""] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-gradient-to-br before:from-cyan-500 before:via-blue-700 before:to-deep-purple-400 before:opacity-[0.90]
+}
 /* 
 rdt_Table
 rdt_TableRow //no se

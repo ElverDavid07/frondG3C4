@@ -1,24 +1,9 @@
 import Datatable, { createTheme } from "react-data-table-component";
 import {toast,ToastContainer,Zoom} from 'react-toastify'
 import Swal from "sweetalert2";
-import {
-  Button,
-  IconButton,
-  Tooltip,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-  Input,
-} from "@material-tailwind/react";
+import {Button,IconButton,Tooltip,Dialog,DialogHeader,DialogBody,DialogFooter,Input,} from "@material-tailwind/react";
 import React from "react";
-import {
-  AiOutlineEdit,
-  AiOutlineDelete,
-  AiOutlineWarning,
-  AiOutlineLoading3Quarters,
-  AiOutlineClose
-} from "react-icons/ai";
+import {AiOutlineEdit,AiOutlineDelete,AiOutlineWarning,AiOutlineLoading3Quarters} from "react-icons/ai";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -27,7 +12,7 @@ import {useParams} from 'react-router-dom'
 
 const Crud = () => {
   const UrlBase = "http://localhost:3000/api/books/";
-  //!--------peticion get-------------
+  //!get
   const api = async () => {
     try {
       const response = await axios(UrlBase);
@@ -39,16 +24,30 @@ const Crud = () => {
     }
   };
   
-  //!----------//----------
-  //*-------editar---------------
-  const editar = (id,data)=>{
-    console.log(UrlBase+id)
-    mostrarModal()
-    axios.put(UrlBase+id)
-    console.log(data)
+  //?----------//----------
+ const {idParams} =useParams();
+  //!put
+  const editar =async(id)=>{
+   try {
+     console.log(id)
+     mostrarModal()
+     await axios.put(UrlBase+id)   
+   } catch (error) {
+    console.log(error)
+   }
+
   }
-  //!------------eliminar------------
- 
+  //!post
+  const post =async(data)=>{
+   try {
+    await axios.post(UrlBase,data)
+    setDatos(datos.concat(data))
+    reset();
+   } catch (error) {
+    console.log(error)
+   }
+  }
+  //!delate
   const delate = async(id)=>{
   Swal.fire({
     title: 'Estas seguro?',
@@ -68,46 +67,33 @@ const Crud = () => {
         console.log(error)
       }
       setDatos(datos.filter(dato =>dato._id !== id))
-      toastify()
+      toast.success("eliminado correctamente")
     }
   })
-  
 }
-const params =useParams();
-const toastify =()=>{
-  toast.success("eliminado correctamente")
-}
+//?--------------
+
+
 //!useEfect
+useEffect(() => {
+  api()
+}, []);
+//!useStates
   const [datos, setDatos] = useState([]);
-  useEffect(() => {
-    api()
-  }, []);
-  //useStates
    const [loader, setloader] = useState(true);
   const [activate, setActivate] = useState(false);
-  //abrir modal
-
+  //!abrir modal
   const mostrarModal = () => setActivate(!activate);//true
-
   //usemodal
-  const {
-    register,
-    reset,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  //!----peticion post-------
+  const {register,reset,handleSubmit,formState:{ errors },} = useForm();
 
+  //! lo que ocurre cuando se le da a enviar en el formulario
   const customSubmit = (data) => {
-    axios.post(UrlBase,data)
-    setDatos(datos.concat(data))
-    reset();
-    console.log(data)
+  post(data)
    
   };
   
-
-  //columnas de la tabla
+  //!columnas de la tabla
   const columns = [
     {
       name: "libros",
@@ -124,9 +110,7 @@ const toastify =()=>{
     },
     { name: "autor", selector: (row) => row.autor,
      sortable: true,grow:"2"},
-     
-     
-    //botones en la table
+    //!botones de actualizar y de eliminar
     {
       name: "acciones",
       
@@ -160,14 +144,14 @@ const toastify =()=>{
       ),
     },
   ];
-  //tema personalizado
+  //!tema personalizado de la tabla
   createTheme("custom", {
     divider: {
       default: "transparent",
     },
   });
 
-  //paginacion en español
+  //!paginacion en español
   const paginationOpciones = {
     rowsPerPageText: "Filas por pagina",
     rangeSeparatorText: "de",
@@ -188,6 +172,7 @@ const toastify =()=>{
           </Button>
         </div>
         {/* <span className="flex gap-2 items-center justify-end mb-5 mr-20 bg-gradient-to-br from-indigo-900 to-cyan-500 bg-clip-text text-transparent  font-book text-2xl capitalize">total de libros {datos.length}</span> */}
+        {/* //!Modal */}
         <Dialog
           size="sm"
           open={activate}
@@ -197,11 +182,8 @@ const toastify =()=>{
             unmount: { scale: 0.9, y: -100 },
           }}
         >
-          <form onSubmit={handleSubmit(customSubmit)} className="bg-white/10">
+          <form onSubmit={handleSubmit(customSubmit)}>
             <DialogHeader>
-              
-              
-             
               <h3 className=" mx-auto py-3  font-book text-2xl font-extrabold bg-gradient-to-bl from-blue-900 via-cyan-400 to-deep-purple-700 bg-clip-text text-transparent">
                 Agregar un libro
               </h3>
@@ -267,11 +249,13 @@ const toastify =()=>{
               <Button variant="gradient" type="submit" onClick={mostrarModal}>agregar</Button>
             </DialogFooter>
           </form>
-        </Dialog>
+        </Dialog> 
+        {/* //!final de el modal */}
 
        {loader ? ( <div>
           <AiOutlineLoading3Quarters className="animate-spin text-5xl mt-16 mx-auto text-blue-500" />
         </div>):(
+          /* //!tabla */
            <div className="mx-auto lg:w-[90%] w-full">
            <Datatable
              data={datos}
