@@ -7,7 +7,7 @@ import {AiOutlineEdit,AiOutlineDelete,AiOutlineWarning,AiOutlineLoading3Quarters
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import {useParams} from 'react-router-dom'
+
 
 
 const Crud = () => {
@@ -23,15 +23,14 @@ const Crud = () => {
       console.log(error);
     }
   };
-  
+ 
   //?----------//----------
- const {idParams} =useParams();
+
   //!put
-  const editar =async(id)=>{
-   try {
-     console.log(id)
-     mostrarModal()
-     await axios.put(UrlBase+id)   
+  const editar =async(id,data)=>{
+    try {
+      console.log(id)
+     mostrarModal()    
    } catch (error) {
     console.log(error)
    }
@@ -85,12 +84,15 @@ useEffect(() => {
   //!abrir modal
   const mostrarModal = () => setActivate(!activate);//true
   //usemodal
+  //!cerrar modal
+  const cerrarModal =()=>{
+    mostrarModal()
+  }
   const {register,reset,handleSubmit,formState:{ errors },} = useForm();
 
   //! lo que ocurre cuando se le da a enviar en el formulario
-  const customSubmit = (data) => {
-  post(data)
-   
+  const customSubmit = (data,id) => {
+    post(data)
   };
   
   //!columnas de la tabla
@@ -180,7 +182,8 @@ useEffect(() => {
           animate={{
             mount: { scale: 1, y: 0 },
             unmount: { scale: 0.9, y: -100 },
-          }}
+          }
+        }
         >
           <form onSubmit={handleSubmit(customSubmit)}>
             <DialogHeader>
@@ -246,7 +249,7 @@ useEffect(() => {
               </div>
             </DialogBody>
             <DialogFooter>
-              <Button variant="gradient" type="submit" onClick={mostrarModal}>agregar</Button>
+              <Button variant="gradient" type="submit" onClick={cerrarModal}>agregar</Button>
             </DialogFooter>
           </form>
         </Dialog> 
