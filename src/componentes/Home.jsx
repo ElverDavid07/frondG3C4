@@ -15,7 +15,7 @@ const Home=() =>{
     <h2 className="text-center text-4xl pt-5 font-book text-white">Home page</h2>
 </Animated>
 <Animated animationIn='bounce'>
- <img src="./dasboard.svg" className="absolute h-[300px] w-[300px] right-20 -top-5 "/>
+ <img src="./dasboard.svg" className="absolute  w-[500px] right-9 top-24 "/>
 </Animated>
 
 

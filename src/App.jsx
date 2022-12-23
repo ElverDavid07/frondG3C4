@@ -16,7 +16,7 @@ const App=() => {
         <div className="flex">
                <Sidebar />
           <Routes>
-            <Route path="/" element={<Home />} children/>
+            <Route path="/" element={<Home />}/>
             <Route path="/login" element={<Login />} />
             <Route path="/crud" element={<Crud />} />
             <Route path="/usuarios" element={<Usuarios/>} />
