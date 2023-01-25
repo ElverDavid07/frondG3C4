@@ -25,7 +25,7 @@ import axios from "axios";
 
 
 const usuarios = () => {
-  const UrlBase = "http://localhost:3000/api/users/";
+  const UrlBase = "http://localhost:3001/api/users/";
   //!--------peticion get-------------
   const api = async () => {
     try {

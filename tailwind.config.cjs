@@ -16,7 +16,7 @@ module.exports = withMT({
       }, 
     },
     colors:{
-      "ligthwhite":"rgba(250,250,250,0.17)"
+      "ligth":"rgba(250,250,250,0.17)"
     }
   },
   plugins: [],
